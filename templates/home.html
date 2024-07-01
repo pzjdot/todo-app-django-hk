@@ -28,30 +28,62 @@
 {#        使用 <style> 标签定义了一些自定义样式，例如调整表单输入框的填充。 #}
         <style>
             .form-control {
-                padding: 1.375rem .75rem !important;
+                padding: 1.375rem 0.75rem !important;
+            }
+            .input-group-text {
+                padding: 0rem 0.75rem !important; 
+            }
+            .search-container {
+                position: relative;
+            }
+            .search-box {
+                position: absolute;
+                top: 7px; 
+                right: -80px; 
+                width: 160px; 
+            }
+            .task-card {
+                margin-bottom: 10px;
             }
         </style>
     </head>
     
     
     <body>
-        <div class="container">
+    
+{#        搜索框#}
+        <div class="container search-container">
+            <div class="search-box">
+                <form method="get" action="{% url 'home' %}">
+                    <div class="input-group rounded">
+                        <input type="search" name="query" class="form-control rounded" placeholder="搜索" aria-label="Search"
+                            aria-describedby="search-addon" value="{{ query }}"/>
+                        <span class="input-group-text border-0" id="search-addon">
+                            <i class="fa-duotone fa-magnifying-glass"></i>
+                        </span>
+                    </div>
+                </form>
+            </div>
         
-{#        页面标题为django todo app #}
-            <h3 class="pt-5 text-center">Django ToDo App</h3>
+{#        页面标题为待办事项APP #}
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="pt-5 text-center">Django 待办事项APP</h3>
+                </div>
+            </div>
         
             <div class="row">
-            
-{#            未完成待办事项标题 my day#}
-                <h4>My Day</h4>
-
-                <p class="text-muted">{% now "jS F Y" %}</p>
-                <div class="col-md-7 col-lg-7" style="height: 450px; overflow: scroll;">
+                <div class="col-md-6">
+                    
+                    {#            未完成待办事项标题 my day#}
+                    <h4>未完成待办事项</h4>
+                    <p class="text-muted">{% now "jS F Y" %}</p>
+                    <div class="col-md-12" style="height: 550px; overflow: scroll;">
                 
                     <!-- List of all the tasks for the day -->
 {#                遍历未完成待办事项列表，for task in tasks#}
-                    {% for task in tasks %}
-                        <div class="card m-1">
+                        {% for task in tasks %}
+                        <div class="card m-1 task-card">
                             <div class="card-body">
                                 {{ task.task }} 
 {#                                这里是对于遍历到的每个未完成的待办事项列表边上添加 已完成按钮，删除按钮和编辑按钮#}
@@ -70,17 +102,21 @@
                         </div>
                     {% endfor %}
                 {#                到这里 endfor 循环结束#}
+                     </div>
                 </div>
+                
+
+            
             
 {#            已完成待办事项标题 completed tasks#}
-                <div class="col-md-5 col-lg-5">
-                    <h5>Completed Tasks</h5>
-                
-                
-                    <!-- List of all the tasks that have completed -->
+                <div class="col-md-6">
+                    <h5>已完成待办事项</h5>
+                    <p class="text-muted">{% now "jS F Y" %}</p>
+                    <div class="col-md-12" style="height: 550px; overflow: scroll;">
+                          <!-- List of all the tasks that have completed -->
 {#                遍历未完成待办事项列表，for task in completed tasks  与上同理#}
-                    {% for task in completed_tasks %}
-                        <div class="card m-1">
+                        {% for task in completed_tasks %}
+                        <div class="card m-1 task-card">
                             <div class="card-body">
                                 {{ task.task }}
                                 
@@ -93,37 +129,27 @@
                                 </span>
                             </div>
                         </div>
-                    {% endfor %}
+                        {% endfor %}
 {#                到这里 endfor 循环结束#}
-                </div>
-            </div>
-        
-        
-            <div class="row">
-                <div class="col-md-6 col-lg-6 p-0" style="position: absolute; bottom: 50px;">
-                    <!-- To Do Form -->
-{#                    添加新的任务表单 add task #}
-                    <form action="{% url 'add_task' %}" method="post">
+                    </div>
+                    <div class="mb-3">
                         
+{#                         添加新的任务表单 add task #}
+                        <form action="{% url 'add_task' %}" method="post">
+                            
 {#                    CSRF token: {% csrf_token %} 用于防止跨站请求伪造攻击。#}
-                        {% csrf_token %}
-                        
-                        <div class="form-group">
-                        <span style="display: flex;">
-                            
-{#                            任务输入框，定义了一个文本输入框，用户可以在其中输入任务内容#}
-                            <label for="task-input" class="visually-hidden">Task</label>
-                            <input type="text" class="form-control" id="task-input" name="task"
-                                   placeholder="Add a task">
-                            
-{#                            添加待办事项按钮， 定义了一个提交按钮，用于添加任务#}
-                            <button type="submit" class="btn btn-primary" style="width: 200px;"><i
-                                    class="fa fa-plus"></i> Add</button>
-                            
-                            
-                        </span>
-                        </div>
-                    </form>
+                            {% csrf_token %}
+                            <div class="form-group d-flex">
+                                
+{#                                任务输入框，定义了一个文本输入框，用户可以在其中输入任务内容#}
+                                <label for="task-input" class="visually-hidden">Task</label>
+                                <input type="text" class="form-control" id="task-input" name="task" placeholder="添加一个待办事项">
+                                
+{#                                添加待办事项按钮， 定义了一个提交按钮，用于添加任务 #}
+                                <button type="submit" class="btn btn-primary ms-2"><i class="fa fa-plus"></i> </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
