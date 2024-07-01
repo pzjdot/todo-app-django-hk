@@ -21,9 +21,7 @@
                 integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
                 crossorigin="anonymous"></script>
         <!-- Font Awesome Icons -->
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         
 {#        使用 <style> 标签定义了一些自定义样式，例如调整表单输入框的填充。 #}
         <style>
@@ -56,10 +54,10 @@
             <div class="search-box">
                 <form method="get" action="{% url 'home' %}">
                     <div class="input-group rounded">
-                        <input type="search" name="query" class="form-control rounded" placeholder="搜索" aria-label="Search"
+                        <input type="search" name="query" class="form-control rounded" placeholder="" aria-label="Search"
                             aria-describedby="search-addon" value="{{ query }}"/>
                         <span class="input-group-text border-0" id="search-addon">
-                            <i class="fa-duotone fa-magnifying-glass"></i>
+                            <i class="fa-solid fa-magnifying-glass"></i>
                         </span>
                     </div>
                 </form>
@@ -91,7 +89,7 @@
 
                                     {# 已完成按钮 #}
                                     <a href="{% url 'mark_as_done' task.pk %}" class="btn btn-success"><i
-                                            class="fa fa-check"></i> Mark as Done</a>
+                                            class="fa fa-check"></i></a>
                                     {# 删除按钮 #}
                                     <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                     
@@ -125,7 +123,7 @@
 
                                     {# 未完成按钮 #}
                                     <a href="{% url 'mark_as_unDone' task.pk %}" class="btn btn-danger"><i
-                                            class="fa fa-times"></i> Mark as UnDone</a>
+                                            class="fa fa-times"></i></a>
                                 </span>
                             </div>
                         </div>
